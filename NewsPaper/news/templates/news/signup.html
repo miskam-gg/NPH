@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .google-login {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .google-login-text {
+            margin-right: 10px;
+        }
+        .google-login-button {
+            background-color: #db4437;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .google-login-button:hover {
+            background-color: #c1351a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Регистрация</h2>
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password1">Пароль:</label>
+            <input type="password" id="password1" name="password1" required>
+
+            <label for="password2">Повторите пароль:</label>
+            <input type="password" id="password2" name="password2" required>
+
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+
+        <div class="google-login">
+            <span class="google-login-text">Вы можете войти так же через Google</span>
+            <button class="google-login-button" id="google-login-button">Google</button>
+        </div>
+    </div>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script>
+        document.getElementById('google-login-button').addEventListener('click', function() {
+            gapi.load('auth2', function() {
+                var auth2 = gapi.auth2.init({
+                    client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com'
+                });
+                auth2.signIn().then(function(googleUser) {
+                    var profile = googleUser.getBasicProfile();
+                    console.log('ID: ' + profile.getId());
+                    console.log('Full Name: ' + profile.getName());
+                    console.log('Given Name: ' + profile.getGivenName());
+                    console.log('Family Name: ' + profile.getFamilyName());
+                    console.log('Email: ' + profile.getEmail());
+                }, function(error) {
+                    console.log(error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
