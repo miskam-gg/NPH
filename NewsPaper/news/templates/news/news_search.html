@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+{% block content %}
+    <h2>Поиск новостей</h2>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <button type="submit">Искать</button>
+    </form>
+    {% for post in filter.qs %}
+        <h3>{{ post.title|censor }}</h3>
+        <p>Дата: {{ post.created_at|date:'d.m.Y' }}</p>
+        <p>{{ post.content|censor }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}
