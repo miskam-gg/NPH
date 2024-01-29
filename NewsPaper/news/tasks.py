@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
-from .models import Subscription
+from .models import Subscription, Post
 
 
 @shared_task
@@ -12,7 +12,6 @@ def send_weekly_digest():
     today = datetime.now()
     week_ago = today - timedelta(days=7)
     new_articles = Post.objects.filter(created_at__gte=week_ago)
-
     for user in User.objects.all():
         subscriptions = Subscription.objects.filter(user=user)
         categories = [subscription.category for subscription in subscriptions]
