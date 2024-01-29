@@ -57,6 +57,14 @@ class Post(models.Model):
         return self.content[:124] + '...' if len(self.content) > 124 else self.content
 
 
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} подписан на категорию {self.category}"
+
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

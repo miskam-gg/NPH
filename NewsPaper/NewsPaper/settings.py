@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'crispy_forms',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -145,3 +146,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
